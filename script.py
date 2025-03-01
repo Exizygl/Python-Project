@@ -1,5 +1,12 @@
 import os
+from tkinter import *
 os.system("clear")
+
+interface = Tk()
+interface.title("Tic Tac Toe")
+interface.geometry("300x300")
+interface.resizable(width=False, height=False)
+interface.configure(bg="black")
 
 class Board():
     def __init__(self):
@@ -78,9 +85,14 @@ class Board():
 
 board = Board()
 
+# interface call
+
+interface.mainloop()
 
 
-def print_header():
+
+
+""" def print_header():
     print("Tic Tac Toe\n")
 
 def refresh_screen():
@@ -92,9 +104,9 @@ def refresh_screen():
 
     # show the board
     board.display()
-
+ 
 while True:
-    refresh_screen()
+     refresh_screen()
 
     # get X input
     x_choice = int(input("\nX) Please choose 1-9. > "))
@@ -151,4 +163,4 @@ while True:
 
     
 
-    
+     """
