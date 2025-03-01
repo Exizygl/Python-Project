@@ -37,6 +37,45 @@ class Board():
     def reset(self):
         self.cells = [" "," "," "," "," "," "," "," "," "," "]
 
+    def ai_move(self):
+        #center move
+        if self.cells[4] == " ":
+            self.update_cell(4, "O")
+            return
+        #can win
+        for combo in [[0,1,2],[3,4,5],[6,7,8],
+                      [0,3,6],[1,4,7],[2,5,8],
+                      [0,4,8],[2,4,6]]:
+            if self.cells[combo[0]] == "O" and self.cells[combo[1]] == "O" and self.cells[combo[2]] == " ":
+                self.update_cell(combo[2], "O")
+                return
+            elif self.cells[combo[0]] == "O" and self.cells[combo[1]] == " " and self.cells[combo[2]] == "O":
+                self.update_cell(combo[1], "O")
+                return
+            elif self.cells[combo[0]] == " " and self.cells[combo[1]] == "O" and self.cells[combo[2]] == "O":
+                self.update_cell(combo[0], "O")
+                return
+        #block
+        for combo in [[0,1,2],[3,4,5],[6,7,8],
+                      [0,3,6],[1,4,7],[2,5,8],
+                      [0,4,8],[2,4,6]]:
+            if self.cells[combo[0]] == "X" and self.cells[combo[1]] == "X" and self.cells[combo[2]] == " ":
+                self.update_cell(combo[2], "O")
+                return
+            elif self.cells[combo[0]] == "X" and self.cells[combo[1]] == " " and self.cells[combo[2]] == "X":
+                self.update_cell(combo[1], "O")
+                return
+            elif self.cells[combo[0]] == " " and self.cells[combo[1]] == "X" and self.cells[combo[2]] == "X":
+                self.update_cell(combo[0], "O")
+                return
+        #random move
+        import random
+        while True:
+            rand = random.randint(0,8)
+            if self.cells[rand] == " ":
+                self.update_cell(rand, "O")
+                return
+
 board = Board()
 
 
@@ -88,7 +127,10 @@ while True:
     
 
     # get O input
-    o_choice = int(input("\nO) Please choose 1-9. > "))
+    
+    board.ai_move()
+    
+    refresh_screen()
 
     if board.is_winner("O"):
         print("\nO wins!\n")
@@ -107,7 +149,6 @@ while True:
         else:
             board.reset()
 
-    # update cell
-    board.update_cell(o_choice - 1, "O")
+    
 
     
