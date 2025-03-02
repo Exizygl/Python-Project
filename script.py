@@ -8,6 +8,25 @@ interface.geometry("300x300")
 interface.resizable(width=False, height=False)
 interface.configure(bg="black")
 
+
+def drawGrid(grid, rows, cols, cell_size):
+    # Draw horizontal lines
+    for row in range(1, rows):  # +1 to draw the bottom edge
+        grid.create_line(0, row * cell_size, cols * cell_size, row * cell_size, width=5, fill="white")
+
+    # Draw vertical lines
+    for col in range(1, cols):  # +1 to draw the right edge
+        grid.create_line(col * cell_size, 0, col * cell_size, rows * cell_size, width=5, fill="white")
+
+rows = 3
+cols = 3
+cell_size = 100 
+
+grid = Canvas(interface, width=cols * cell_size, height=rows * cell_size, bg="black", bd=0, highlightthickness=0)
+grid.pack()
+
+drawGrid(grid, rows, cols, cell_size)
+
 class Board():
     def __init__(self):
         self.cells = [" "," "," "," "," "," "," "," "," "," "]
