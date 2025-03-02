@@ -18,6 +18,17 @@ def drawGrid(grid, rows, cols, cell_size):
     for col in range(1, cols):  # +1 to draw the right edge
         grid.create_line(col * cell_size, 0, col * cell_size, rows * cell_size, width=5, fill="white")
 
+def draw_cross(canvas, x, y, cell_size):
+    # Draw a cross (X) in the specified cell (center of the cell)
+    offset = cell_size // 3
+    canvas.create_line(x - offset, y - offset, x + offset, y + offset, width=10, fill="blue")  # First diagonal
+    canvas.create_line(x - offset, y + offset, x + offset, y - offset, width=10, fill="blue")  # Second diagonal
+
+def draw_circle(canvas, x, y, cell_size):
+    # Draw a circle (O) in the specified cell (center of the cell)
+    offset = cell_size // 3
+    canvas.create_oval(x - offset, y - offset, x + offset, y + offset, width=10, outline="red")
+
 rows = 3
 cols = 3
 cell_size = 100 
@@ -26,6 +37,16 @@ grid = Canvas(interface, width=cols * cell_size, height=rows * cell_size, bg="bl
 grid.pack()
 
 drawGrid(grid, rows, cols, cell_size)
+
+for row in range(rows):  # Skip the first and last rows
+    for col in range(cols):  # Skip the first and last columns
+        center_x = col * cell_size + cell_size // 2
+        center_y = row * cell_size + cell_size // 2
+        # Choose to draw a cross or a circle (you can toggle between them)
+        if (row + col) % 2 == 0:
+            draw_cross(grid, center_x, center_y, cell_size)
+        else:
+            draw_circle(grid, center_x, center_y, cell_size)
 
 class Board():
     def __init__(self):
