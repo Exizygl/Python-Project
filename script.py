@@ -46,11 +46,11 @@ for row in range(rows):  # Skip the first and last rows
         if (row + col) % 2 == 0:
             draw_cross(grid, center_x, center_y, cell_size)
         else:
-            draw_circle(grid, center_x, center_y, cell_size)
+            draw_circle(grid, center_x, center_y, cell_size) 
 
 class Board():
     def __init__(self):
-        self.cells = [" "," "," "," "," "," "," "," "," "," "]
+        self.cells = [[" "," "," "],[" "," "," "],[" "," "," "]]
 
     def display(self):
         print(" %s | %s | %s "%(self.cells[0],self.cells[1], self.cells[2]))
@@ -64,9 +64,14 @@ class Board():
             self.cells[cell_no] = player
 
     def is_winner(self, player):
-        for combo in [[0,1,2],[3,4,5],[6,7,8],
-                      [0,3,6],[1,4,7],[2,5,8],
-                      [0,4,8],[2,4,6]]:
+        for combo in [[(0, 0), (0, 1), (0, 2)],  # Row 1
+                     [(1, 0), (1, 1), (1, 2)],  # Row 2
+                     [(2, 0), (2, 1), (2, 2)],  # Row 3
+                     [(0, 0), (1, 0), (2, 0)],  # Column 1
+                     [(0, 1), (1, 1), (2, 1)],  # Column 2
+                     [(0, 2), (1, 2), (2, 2)],  # Column 3
+                     [(0, 0), (1, 1), (2, 2)],  # Diagonal 1
+                     [(0, 2), (1, 1), (2, 0)]]: # Diagonal 2
             if self.cells[combo[0]] == player and self.cells[combo[1]] == player and self.cells[combo[2]] == player:
                 return True
         return False
@@ -82,17 +87,21 @@ class Board():
             return
 
     def reset(self):
-        self.cells = [" "," "," "," "," "," "," "," "," "," "]
-
+        self.cells = [[" "," "," "],[" "," "," "],[" "," "," "]]
     def ai_move(self):
         #center move
         if self.cells[4] == " ":
             self.update_cell(4, "O")
             return
         #can win
-        for combo in [[0,1,2],[3,4,5],[6,7,8],
-                      [0,3,6],[1,4,7],[2,5,8],
-                      [0,4,8],[2,4,6]]:
+        for combo in [[(0, 0), (0, 1), (0, 2)],  # Row 1
+                     [(1, 0), (1, 1), (1, 2)],  # Row 2
+                     [(2, 0), (2, 1), (2, 2)],  # Row 3
+                     [(0, 0), (1, 0), (2, 0)],  # Column 1
+                     [(0, 1), (1, 1), (2, 1)],  # Column 2
+                     [(0, 2), (1, 2), (2, 2)],  # Column 3
+                     [(0, 0), (1, 1), (2, 2)],  # Diagonal 1
+                     [(0, 2), (1, 1), (2, 0)]]: # Diagonal 2
             if self.cells[combo[0]] == "O" and self.cells[combo[1]] == "O" and self.cells[combo[2]] == " ":
                 self.update_cell(combo[2], "O")
                 return
@@ -103,9 +112,14 @@ class Board():
                 self.update_cell(combo[0], "O")
                 return
         #block
-        for combo in [[0,1,2],[3,4,5],[6,7,8],
-                      [0,3,6],[1,4,7],[2,5,8],
-                      [0,4,8],[2,4,6]]:
+        for combo in [[(0, 0), (0, 1), (0, 2)],  # Row 1
+                     [(1, 0), (1, 1), (1, 2)],  # Row 2
+                     [(2, 0), (2, 1), (2, 2)],  # Row 3
+                     [(0, 0), (1, 0), (2, 0)],  # Column 1
+                     [(0, 1), (1, 1), (2, 1)],  # Column 2
+                     [(0, 2), (1, 2), (2, 2)],  # Column 3
+                     [(0, 0), (1, 1), (2, 2)],  # Diagonal 1
+                     [(0, 2), (1, 1), (2, 0)]]: # Diagonal 2
             if self.cells[combo[0]] == "X" and self.cells[combo[1]] == "X" and self.cells[combo[2]] == " ":
                 self.update_cell(combo[2], "O")
                 return
@@ -127,7 +141,7 @@ board = Board()
 
 # interface call
 
-interface.mainloop()
+#interface.mainloop()
 
 
 
